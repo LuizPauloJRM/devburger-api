@@ -1,0 +1,20 @@
+{
+  "name": "devburger-api",
+  "version": "1.0.0",
+  "description": "É uma API REST que gerencia produtos, usuários, pedidos e autenticação. Cadastro e gerenciamento de usuários",
+  "main": "src/server.js",
+  "scripts": {
+    "dev": "nodemon"
+  },
+  "author": {
+    "name": "Luiz Paulo",
+    "url": "https://github.com/LuizPauloJRM?tab=repositories"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
