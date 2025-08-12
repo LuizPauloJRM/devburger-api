@@ -1,3 +1,5 @@
-const app = require('./app');
-//exposição da porta 3001
-app.listen(3001, () => console.log('Server rodando porta 3001'));
+
+
+import app from './app'; // Importa a instância da aplicação configurada
+
+app.listen(3001, () => console.log('Servidor rodando na porta 3001!'));
