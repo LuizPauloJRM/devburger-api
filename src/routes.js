@@ -1,11 +1,10 @@
 
 import { Router } from 'express'
+import UserController from './app/controllers/UserController';
 
 const routes = new Router()
 
 //configuração de rota 
-routes.get('/', (req, res) => {
-    return res.status(200).json({ message: 'API is running' })
-})
+routes.post('/users', UserController.store);
 
 export default routes;
