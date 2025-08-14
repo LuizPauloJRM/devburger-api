@@ -25,7 +25,7 @@ class UserController {
         //  Verifica se já existe usuário com o mesmo email
         const userExists = await User.findOne({ where: { email } });
         if (userExists) {
-            return response.status(409).json({ error: 'User already exists' }); // 409 = Conflito
+            return response.status(400).json({ error: 'User already exists' }); // 400 = Conflito
         }
 
         //  Cria novo usuário no banco com ID único
