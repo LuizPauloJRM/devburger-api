@@ -1,5 +1,6 @@
 import Sequelize, { Model } from 'sequelize';
 import bcrypt from 'bcryptjs';
+import { compare } from './../../../node_modules/bcryptjs/index';
 
 /**
  * Model User
@@ -30,6 +31,10 @@ class User extends Model {
 
         // Retorna a própria classe para encadeamento
         return this;
+    }
+    //Compara a senha fornecida com o hash armazenado
+    comparePassword(password) {
+        return bcrypt.compare(password, this.password_hash);
     }
 }
 
