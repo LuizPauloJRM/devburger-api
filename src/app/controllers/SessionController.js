@@ -1,31 +1,47 @@
+import User from '../models/User';
 import * as Yup from 'yup';
-import { compare } from './../../../node_modules/bcryptjs/index';
-import User from '../models/User.js';
-
 
 class SessionController {
-    async store(req, res) {
+    async store(request, response) {
         const schema = Yup.object({
+            name: Yup.string().required(),
             email: Yup.string().email().required(),
             password: Yup.string().min(6).required(),
-        })
-        const isValid = await schema.isValid(req.body);
+            admin: Yup.boolean(),
+        });
+        const isValid = await schema.isValid(request.body);
+        const emailOrPasswordIncorrect = () => {
+            return response
+                .status(401)
+                .json({ error: 'Make sure your email or password are correct' });
+        };
+
         if (!isValid) {
-            return res.status(400).json({ error: 'Validation fails' });
+            return emailOrPasswordIncorrect();
         }
-        const { email, password } = req.body;
-        //return res.json({ message: 'Session created' });
 
-        const user = await User.findOne({ where: { email } });
+        const { email, password } = request.body;
+
+        const user = await User.findOne({
+            where: { email },
+        });
         if (!user) {
-            return res.status(401).json({ error: 'User not found' });
+            return emailOrPasswordIncorrect();
         }
-        const isSamePassword = await user.comparePassword(password);
 
-        console.log(isSamePassword);
+        const isSamePassword = await user.checkPassword(password);
+        if (!isSamePassword) {
+            return emailOrPasswordIncorrect();
+        }
 
-        return res.json({ message: 'Session created' });
-
+        return response.status(201).json({
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            admin: user.admin,
+        });
     }
 }
+
 export default new SessionController();
+
