@@ -11,7 +11,7 @@ class ProductController {
         try {
             schema.validateSync(req.body, { abortEarly: false });
         } catch (err) {
-            return res.status(400).json({ error: 'Validation fails', messages: err.errors });
+            return res.status(400).json({ error: err.errors });
         }
         return res.status(201).json({ message: 'Product created' });
     }
