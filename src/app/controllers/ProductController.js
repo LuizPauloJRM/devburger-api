@@ -8,6 +8,11 @@ class ProductController {
             price: Yup.number().required(),
             category: Yup.string().required(),
         });
+
+        const { file } = req;
+
+        console.log(file);
+
         try {
             schema.validateSync(req.body, { abortEarly: false });
         } catch (err) {
